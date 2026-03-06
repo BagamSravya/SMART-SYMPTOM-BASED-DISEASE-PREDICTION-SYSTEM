@@ -88,7 +88,7 @@ SMART SYMPTOM BASED DISEASE PREDICTION SYSTEM/
 
 ### Application Output
 
-![Output Screen 1](screenshots/output_screen_1.png)
+![Output Screen 1](screenshots/Output_screen_1.png)
 
 ![Output Screen 2](screenshots/output_screen_2.png)
 
