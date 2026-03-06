@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SymtoMed - Smart Disease Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .search-box {
+            margin-bottom: 15px;
+        }
+        .symptom-list {
+            max-height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            background-color: #fff;
+        }
+        .symptom-item {
+            margin-bottom: 5px;
+        }
+        .result {
+            background-color: #e9f7ef;
+            border: 1px solid #2ecc71;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        .section {
+            margin-top: 15px;
+        }
+        .disclaimer {
+            margin-top: 30px;
+            font-size: 0.85em;
+            color: #c73131;
+            text-align: center;
+        }
+        .doctor-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .find-doctor-button {
+    background-color: #28a72e; /* green */
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 15px;
+}
+
+.find-doctor-button:hover {
+    background-color: #428821;
+}
+
+    </style>
+
+    <script>
+        function filterSymptoms() {
+            let input = document.getElementById("symptomSearch").value.toLowerCase();
+            let items = document.querySelectorAll(".symptom-item");
+
+            items.forEach(item => {
+                const labelText = item.textContent.toLowerCase();
+                item.style.display = labelText.includes(input) ? "block" : "none";
+            });
+        }
+        function clearForm() {
+        // Clear the search box
+        document.getElementById("symptomSearch").value = "";
+
+        // Show all symptom checkboxes again
+        filterSymptoms();
+
+        // Uncheck all checkboxes
+        document.querySelectorAll("input[type='checkbox']").forEach(cb => cb.checked = false);
+    }
+
+        function findDoctors(disease) {
+            if (disease && disease !== "No disease predicted") {
+                const query = encodeURIComponent("Doctors near me for " + disease);
+                window.open("https://www.google.com/search?q=" + query, "_blank");
+            } else {
+                alert("Please run a prediction to get a disease name first.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>SymtoMed - Smart Disease Prediction</h1>
+
+    <form method="post">
+        <div class="search-box">
+            <label>Search Symptoms:</label><br>
+            <input type="text" id="symptomSearch" onkeyup="filterSymptoms()" placeholder="Type to search symptoms..." style="width: 100%; padding: 8px;">
+        </div>
+
+        <label>Select Symptoms (at least 3):</label><br>
+        <div class="symptom-list">
+            {% for symptom in symptoms %}
+                <div class="symptom-item">
+                    <label>
+                        <input type="checkbox" name="symptoms" value="{{ symptom }}"> {{ symptom }}
+                    </label>
+                </div>
+            {% endfor %}
+        </div>
+        <br>
+<div class="form-buttons">
+    <button type="submit">Predict Disease</button>
+    <button type="button" onclick="clearForm()">Clear</button>
+</div>
+
+    </form>
+
+    {% if result %}
+        <div class="result">
+            <h2>Prediction Result</h2>
+            <p><strong>Disease:</strong> {{ result.disease }}</p>
+            <p><strong>Confidence:</strong> {{ result.confidence }}%</p>
+
+            <div class="section">
+                <h3>Description:</h3>
+                <p>{{ result.description }}</p>
+            </div>
+
+            <div class="section">
+                <h3>Precautions:</h3>
+                <ul>
+                    {% for item in result.precautions %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Medications:</h3>
+                <ul>
+                    {% for item in result.medications %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="section">
+                <h3>Diet Recommendations:</h3>
+                <ul>
+                    {% for item in result.diets %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="doctor-link">
+                <button type="button" class="find-doctor-button" onclick="findDoctors('{{ result.disease }}')">
+    🩺 Find Nearby Doctors  📍
+</button>
+
+            </div>
+        </div>
+    {% endif %}
+
+    <div class="disclaimer">
+        DISCLAIMER * This tool is for informational use only. Always consult a doctor for medical advice.
+    </div>
+</body>
+</html>

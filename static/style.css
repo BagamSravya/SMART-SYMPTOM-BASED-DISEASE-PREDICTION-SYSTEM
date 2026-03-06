@@ -1,0 +1,35 @@
+body {
+    font-family: Arial;
+    margin: 30px;
+    background-color: #f4f4f4;
+}
+h1 {
+    color: #003366;
+}
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+select {
+    width: 100%;
+    padding: 10px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.result {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+}
+.disclaimer {
+    color: red;
+    font-size: 0.9em;
+}
