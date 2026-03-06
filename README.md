@@ -88,11 +88,11 @@ SMART SYMPTOM BASED DISEASE PREDICTION SYSTEM/
 
 ### Application Output
 
-![Output Screen 1](screenshots/Output_screen_1.png)
+![Output Screen 1](Screenshots/Output_screen_1.png)
 
-![Output Screen 2](screenshots/output_screen_2.png)
+![Output Screen 2](Screenshots/output_screen_2.png)
 
-![Output Screen 3](screenshots/output_screen_3.png)
+![Output Screen 3](Screenshots/output_screen_3.png)
 
 ---
 
